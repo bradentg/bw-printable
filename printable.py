@@ -9,8 +9,8 @@ from fpdf import FPDF
 class PDF(FPDF):
     def header(self):
         self.set_font("helvetica", style="B", size=16)
-        self.cell(40, 10, "Bitwarden")
-        self.ln(20)
+        self.cell(40, 10, "Title")
+        self.ln(10)
 
     def footer(self):
         self.set_y(-15)
@@ -40,5 +40,7 @@ pdf.add_page()
 pdf.set_font("Times", size=12)
 
 for item in data["items"]:
-    pdf.cell(0, 10, item["name"], new_x="LMARGIN", new_y="NEXT")
-pdf.gen_output("test3.pdf")
+    pdf.set_font("Times", style="B", size=10)
+    pdf.cell(0, 10, item["name"])
+    pdf.set_font("Times", size=10)
+    pdf.cell(0, 10, f" | {item["login"]["username"]} | {item["login"]["password"]}", new_x="LMARGIN", new_y="NEXT")
